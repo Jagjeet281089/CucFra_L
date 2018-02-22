@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import cucumber.api.java.en.*;
+import managers.PageObjectManager;
 import pageObjects.CartPage;
 import pageObjects.CheckoutPage;
 import pageObjects.HomePage;
@@ -21,7 +22,7 @@ public class Steps {
 	ProductListingPage productListingPage;
 	CartPage cartPage;
 	CheckoutPage checkoutPage;
-	
+	PageObjectManager pageObjectManager;
 	
 	@Given("^User is on Home Page$")
 	public void user_is_on_Home_Page() throws Throwable {
@@ -30,31 +31,32 @@ public class Steps {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("http://www.shop.demoqa.com");
+		pageObjectManager = new PageObjectManager(driver);
 	}
 
 	@When("^he search for \"(.*)\"$")
 	public void he_search_for(String product)  {
-		home = new HomePage(driver);
+		home = pageObjectManager.getHomePage();
 		home.perform_Search(product);
 	}
 
 	@When("^choose to buy the first item$")
 	public void choose_to_buy_the_first_item() {
-		productListingPage = new ProductListingPage(driver);
+		productListingPage = pageObjectManager.getProductListingPage();
 		productListingPage.select_Product(0);
 		productListingPage.clickOn_AddToCart();		
 	}
 
 	@When("^moves to checkout from mini cart$")
 	public void moves_to_checkout_from_mini_cart(){
-		cartPage = new CartPage(driver);
+		cartPage = pageObjectManager.getCartPage();
 		cartPage.clickOn_Cart();
 		cartPage.clickOn_ContinueToCheckout();	
 	}
 	
 	@When("^enter personal details on checkout page$")
 	public void enter_personal_details_on_checkout_page() throws InterruptedException {
-		checkoutPage = new CheckoutPage(driver);
+		checkoutPage = pageObjectManager.getCheckoutPage();
 		checkoutPage.fill_PersonalDetails();	
 	}
 	
@@ -72,7 +74,6 @@ public class Steps {
 	public void place_the_order() throws InterruptedException {
 		checkoutPage.check_TermsAndCondition(true);
 		checkoutPage.clickOn_PlaceOrder();
-		
 		driver.quit();
 	}	
 }
