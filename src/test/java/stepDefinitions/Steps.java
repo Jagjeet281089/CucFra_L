@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import cucumber.api.java.en.*;
+import managers.FileReaderManager;
 import managers.PageObjectManager;
 import pageObjects.CartPage;
 import pageObjects.CheckoutPage;
@@ -29,8 +30,8 @@ public class Steps {
 		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "/drivers/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("http://www.shop.demoqa.com");
+		driver.manage().timeouts().implicitlyWait(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait(), TimeUnit.SECONDS);
+		driver.get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
 		pageObjectManager = new PageObjectManager(driver);
 	}
 
