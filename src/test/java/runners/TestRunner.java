@@ -8,6 +8,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		features = "src/test/resources/functionalTests"
 		,glue= {"stepDefinitions"}
+		,tags={"@Wip"}
 		)
 public class TestRunner {
 }
