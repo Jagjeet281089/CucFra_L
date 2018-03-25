@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import cucumber.TestContext;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
 
@@ -16,11 +17,13 @@ public class CartPageSteps {
 		testContext = context;
 		cartPage = testContext.getPageObjectManager().getCartPage();
 	}
-	
-	@When("^moves to checkout from mini cart$")
+
+	@Given("^User (?:is on|opens|opens the) Cart Page and moves to place order$")
 	public void moves_to_checkout_from_mini_cart(){
-		cartPage.clickOn_Cart();
-		cartPage.clickOn_ContinueToCheckout();	
+		cartPage.navigateTo_CartPage();
+		cartPage.clickOn_PlaceOrder();
 	}
-	
+
+
+
 }

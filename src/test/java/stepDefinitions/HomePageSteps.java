@@ -1,6 +1,8 @@
 package stepDefinitions;
 
 import cucumber.TestContext;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,7 +18,7 @@ public class HomePageSteps {
 		home = testContext.getPageObjectManager().getHomePage();
 	}
 	
-	@Given("^User (?:is on|opens) Home Page$")
+	@Given("^User (?:is on|opens| opens the) Home Page$")
 	public void user_is_on_Home_Page() throws Throwable {
 		home.navigateTo_HomePage();
 	}
@@ -26,7 +28,7 @@ public class HomePageSteps {
 		home.check_HeaderSearchBar();
 	}	
 	
-	@When("^he search for \"(.*)\"$")
+	@When("^User (?:search|searches) for \"(.*)\"$")
 	public void he_search_for(String product)  {
 		home.perform_Search(product);
 	}
@@ -41,4 +43,8 @@ public class HomePageSteps {
 	    home.closeLoginPopup();
 	}
 
+	@And("^User Login via popup by providing mobile as \"([^\"]*)\" and password as \"([^\"]*)\"$")
+	public void userLoginViaPopupByProvidingMobileAsAndPasswordAs(String mobile, String password) throws Throwable {
+		home.loginOnPopup(mobile,password);
+	}
 }

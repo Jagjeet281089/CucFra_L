@@ -82,6 +82,11 @@ public class ConfigFileReader {
 		if(windowSize != null) return Boolean.valueOf(windowSize);
 		return true;
 	}
-	
+
+	public String getTestDataResourcePath(){
+		String TestDataResourcePath = properties.getProperty("testDataResourcePath");
+		if(TestDataResourcePath!= null) return TestDataResourcePath;
+		else throw new RuntimeException("Test Data Resource Path not specified in the Configuration.properties file for the Key:testDataResourcePath");
+	}
 
 }

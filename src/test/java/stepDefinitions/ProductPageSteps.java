@@ -9,15 +9,16 @@ public class ProductPageSteps {
 	
 	ProductListingPage productListingPage;
 	TestContext testContext;
-	
+
+
 	public ProductPageSteps(TestContext context) {
 		testContext = context;
 		productListingPage = testContext.getPageObjectManager().getProductListingPage();
 	}
 	
-	@When("^choose to buy the first item$")
-	public void choose_to_buy_the_first_item() {
-		productListingPage.select_Product(0);
-		productListingPage.clickOn_AddToCart();		
+	@When("^User (?:choose|chooses) to buy the product with name \"(.*)\"$")
+	public void choose_to_buy_the_item(String prodName) {
+		productListingPage.selectProductWithText(prodName);
+		productListingPage.addProductTotheCart();
 	}
 }
